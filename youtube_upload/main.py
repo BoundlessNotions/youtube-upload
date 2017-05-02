@@ -17,7 +17,7 @@ Upload a video to Youtube from the command-line.
 
 import os
 import sys
-import optparse
+import argparse
 import collections
 import webbrowser
 
@@ -194,50 +194,50 @@ def main(arguments):
     usage = """Usage: %prog [OPTIONS] VIDEO [VIDEO2 ...]
 
     Upload videos to Youtube."""
-    parser = optparse.OptionParser(usage)
+    parser = argparse.ArgumentParser(usage)
 
     # Video metadata
-    parser.add_option('-t', '--title', dest='title', type="string",
+    parser.add_argument('-t', '--title', dest='title', type="string",
         help='Video title')
-    parser.add_option('-c', '--category', dest='category', type="string",
+    parser.add_argument('-c', '--category', dest='category', type="string",
         help='Video category')
-    parser.add_option('-d', '--description', dest='description', type="string",
+    parser.add_argument('-d', '--description', dest='description', type="string",
         help='Video description')
-    parser.add_option('', '--tags', dest='tags', type="string",
+    parser.add_argument('', '--tags', dest='tags', type="string",
         help='Video tags (separated by commas: "tag1, tag2,...")')
-    parser.add_option('', '--privacy', dest='privacy', metavar="STRING",
+    parser.add_argument('', '--privacy', dest='privacy', metavar="STRING",
         default="public", help='Privacy status (public | unlisted | private)')
-    parser.add_option('', '--publish-at', dest='publish_at', metavar="datetime",
+    parser.add_argument('', '--publish-at', dest='publish_at', metavar="datetime",
        default=None, help='Publish date (ISO 8601): YYYY-MM-DDThh:mm:ss.sZ')
-    parser.add_option('', '--location', dest='location', type="string",
+    parser.add_argument('', '--location', dest='location', type="string",
         default=None, metavar="latitude=VAL,longitude=VAL[,altitude=VAL]",
         help='Video location"')
-    parser.add_option('', '--recording-date', dest='recording_date', metavar="datetime",
+    parser.add_argument('', '--recording-date', dest='recording_date', metavar="datetime",
         default=None, help="Recording date (ISO 8601): YYYY-MM-DDThh:mm:ss.sZ")
-    parser.add_option('', '--default-language', dest='default_language', type="string",
+    parser.add_argument('', '--default-language', dest='default_language', type="string",
         default=None, metavar="string", 
         help="Default language (ISO 639-1: en | fr | de | ...)")
-    parser.add_option('', '--default-audio-language', dest='default_audio_language', type="string",
+    parser.add_argument('', '--default-audio-language', dest='default_audio_language', type="string",
         default=None, metavar="string", 
         help="Default audio language (ISO 639-1: en | fr | de | ...)")
-    parser.add_option('', '--thumbnail', dest='thumb', type="string", metavar="FILE", 
+    parser.add_argument('', '--thumbnail', dest='thumb', type="string", metavar="FILE", 
         help='Image file to use as video thumbnail (JPEG or PNG)')
-    parser.add_option('', '--playlist', dest='playlist', type="string",
+    parser.add_argument('', '--playlist', dest='playlist', type="string",
         help='Playlist title (if it does not exist, it will be created)')
-    parser.add_option('', '--title-template', dest='title_template',
+    parser.add_argument('', '--title-template', dest='title_template',
         type="string", default="{title} [{n}/{total}]", metavar="string",
         help='Template for multiple videos (default: {title} [{n}/{total}])')
 
     # Authentication
-    parser.add_option('', '--client-secrets', dest='client_secrets',
+    parser.add_argument('', '--client-secrets', dest='client_secrets',
         type="string", help='Client secrets JSON file')
-    parser.add_option('', '--credentials-file', dest='credentials_file',
+    parser.add_argument('', '--credentials-file', dest='credentials_file',
         type="string", help='Credentials JSON file')
-    parser.add_option('', '--auth-browser', dest='auth_browser', action='store_true',
+    parser.add_argument('', '--auth-browser', dest='auth_browser', action='store_true',
         help='Open a GUI browser to authenticate if required')
 
     #Additional options
-    parser.add_option('', '--open-link', dest='open_link', action='store_true',
+    parser.add_argument('', '--open-link', dest='open_link', action='store_true',
         help='Opens a url in a web browser to display the uploaded video')
 
     options, args = parser.parse_args(arguments)
@@ -249,6 +249,6 @@ def main(arguments):
 
 def run():
     sys.exit(lib.catch_exceptions(EXIT_CODES, main, sys.argv[1:]))
-  
+
 if __name__ == '__main__':
     run()
